@@ -1,4 +1,4 @@
-package com.raduq.people.api.person.pet;
+package com.raduq.people.server.person.pet;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +9,7 @@ public class Pet {
 	private final Long id;
 	private final String name;
 	private final Integer age;
-	
+
 	public PetEntity toEntity() {
 		return PetEntity.builder()
 			.id(id)

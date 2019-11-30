@@ -1,8 +1,5 @@
-package com.raduq.people.api.person.pet;
+package com.raduq.people.server.person.pet;
 
-import com.raduq.people.api.person.Person;
-import com.raduq.people.api.person.PersonEntity;
-import com.raduq.people.api.person.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +30,7 @@ public class PetService {
 	}
 
 	public Pet update(Long id, Pet pet) {
-		return repository.save(pet.toEntity(id)).toDTO();
+		return repository.save(pet.toEntity()).toDTO();
 	}
 
 	public void delete(Long id) {

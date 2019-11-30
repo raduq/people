@@ -1,12 +1,10 @@
-package com.raduq.people.api.person;
+package com.raduq.people.server.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,8 +30,8 @@ public class PersonService {
 		return repository.save(person.toEntity()).toDTO();
 	}
 
-	public Person update(Long id, Person person) {
-		return repository.save(person.toEntity(id)).toDTO();
+	public Person update(Long id, Person updatePerson) {
+		return repository.save(updatePerson.toEntity()).toDTO();
 	}
 
 	public void delete(Long id) {

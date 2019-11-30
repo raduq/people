@@ -1,4 +1,4 @@
-package com.raduq.people.api.person.pet;
+package com.raduq.people.server.person.pet;
 
 public class PetNotFoundException extends RuntimeException {
 

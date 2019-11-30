@@ -1,23 +1,31 @@
-package com.raduq.people.api.person.pet;
+package com.raduq.people.server.person.pet;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Data
+
 @Builder
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "pet")
 public class PetEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private final Long id;
-	private final String name;
-	private final Integer age;
+	private Long id;
+	@Column(name = "name", nullable = false)
+	private String name;
+	@Column(name = "age")
+	private Integer age;
 
 	public Pet toDTO() {
 		return Pet.builder()

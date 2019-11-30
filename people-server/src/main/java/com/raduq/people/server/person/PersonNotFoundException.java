@@ -1,4 +1,4 @@
-package com.raduq.people.api.person;
+package com.raduq.people.server.person;
 
 public class PersonNotFoundException extends RuntimeException {
 

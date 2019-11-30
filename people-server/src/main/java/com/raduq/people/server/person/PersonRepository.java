@@ -1,4 +1,4 @@
-package com.raduq.people.api.person;
+package com.raduq.people.server.person;
 
 import org.springframework.data.repository.CrudRepository;
 

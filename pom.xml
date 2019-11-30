@@ -21,11 +21,32 @@
 
 	<properties>
 		<junit.version>5.5.2</junit.version>
-
-		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<swagger.version>2.9.2</swagger.version>
+		<h2.version>1.4.197</h2.version>
 
 		<java.version>1.13</java.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
