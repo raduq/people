@@ -1,18 +1,24 @@
 package com.raduq.people.server.person.address;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Builder
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
-	private final Long id;
-	private final String street;
-	private final String zipCode;
-	private final Long number;
-	private final Long numberAddition;
-	private final String city;
-	private final String country;
+	private Long id;
+	private String street;
+	private String zipCode;
+	private Long number;
+	private Long numberAddition;
+	private String city;
+	private String country;
 
 	public AddressEntity toEntity() {
 		return new AddressMapper().toEntity(this);

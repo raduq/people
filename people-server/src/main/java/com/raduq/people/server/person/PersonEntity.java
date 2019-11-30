@@ -29,9 +29,9 @@ public class PersonEntity {
 	private String lastName;
 	@Column(name = "birth_date")
 	private LocalDateTime birthDate;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private AddressEntity address;
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<PetEntity> pets;
 
 	public Person toDTO() {

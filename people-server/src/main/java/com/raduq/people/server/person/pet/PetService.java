@@ -1,5 +1,8 @@
 package com.raduq.people.server.person.pet;
 
+import com.raduq.people.server.person.PersonEntity;
+import com.raduq.people.server.person.PersonNotFoundException;
+import com.raduq.people.server.person.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,8 @@ public class PetService {
 
 	@Autowired
 	private PetRepository repository;
+	@Autowired
+	private PersonRepository personRepository;
 
 	public Pet getPet(Long id) {
 		return repository.findById(id)
@@ -25,8 +30,12 @@ public class PetService {
 			.collect(Collectors.toList());
 	}
 
-	public Pet save(Pet pet) {
-		return repository.save(pet.toEntity()).toDTO();
+	public Pet save(Long personId, Pet pet) {
+		PersonEntity person = personRepository.findById(personId)
+			.orElseThrow(() -> new PersonNotFoundException(personId));
+		person.getPets().add(pet.toEntity());
+		PetEntity savedPet = repository.save(pet.toEntity());
+		return savedPet.toDTO();
 	}
 
 	public Pet update(Long id, Pet pet) {

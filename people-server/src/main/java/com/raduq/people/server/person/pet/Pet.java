@@ -1,14 +1,20 @@
 package com.raduq.people.server.person.pet;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Builder
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pet {
-	private final Long id;
-	private final String name;
-	private final Integer age;
+	private Long id;
+	private String name;
+	private Integer age;
 
 	public PetEntity toEntity() {
 		return new PetMapper().toEntity(this);
