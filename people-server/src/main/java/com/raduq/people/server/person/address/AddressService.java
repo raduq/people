@@ -30,12 +30,12 @@ public class AddressService {
 	}
 
 	public Address update(Long id, Address address) {
+		repository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
 		return repository.save(address.toEntity()).toDTO();
 	}
 
 	public void delete(Long id) {
-		AddressEntity addressEntity = repository.findById(id)
-			.orElseThrow(() -> new AddressNotFoundException(id));
+		AddressEntity addressEntity = repository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
 		repository.delete(addressEntity);
 	}
 }

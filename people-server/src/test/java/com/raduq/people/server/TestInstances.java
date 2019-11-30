@@ -4,8 +4,11 @@ import com.raduq.people.server.person.Person;
 import com.raduq.people.server.person.PersonEntity;
 import com.raduq.people.server.person.address.Address;
 import com.raduq.people.server.person.address.AddressEntity;
+import com.raduq.people.server.person.pet.Pet;
+import com.raduq.people.server.person.pet.PetEntity;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 public class TestInstances {
 
@@ -16,6 +19,7 @@ public class TestInstances {
 			.lastName("Wayne")
 			.birthDate(LocalDateTime.of(1988, 12, 23, 6, 0, 0))
 			.address(address())
+			.pets(Collections.singletonList(pet()))
 			.build();
 	}
 
@@ -26,6 +30,7 @@ public class TestInstances {
 			.lastName("Wayne")
 			.birthDate(LocalDateTime.of(1988, 12, 23, 6, 0, 0))
 			.address(addressEntity())
+			.pets(Collections.singletonList(petEntity()))
 			.build();
 	}
 
@@ -50,6 +55,22 @@ public class TestInstances {
 			.zipCode("1234 CB")
 			.city("Amsterdam")
 			.country("Netherlands")
+			.build();
+	}
+
+	public Pet pet(){
+		return Pet.builder()
+			.id(1L)
+			.name("Toby")
+			.age(2)
+			.build();
+	}
+
+	public PetEntity petEntity(){
+		return PetEntity.builder()
+			.id(1L)
+			.name("Toby")
+			.age(2)
 			.build();
 	}
 }

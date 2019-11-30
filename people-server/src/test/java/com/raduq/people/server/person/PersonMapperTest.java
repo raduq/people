@@ -5,19 +5,24 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PersonTest {
+public class PersonMapperTest {
 
 	@Test
 	void shouldConvertToEntity() {
 		Person person = new TestInstances().person();
 
-		PersonEntity entity = person.toEntity();
+		PersonEntity entity = new PersonMapper().toEntity(person);
 
 		assertEquals(entity, new TestInstances().personEntity());
 	}
 
 	@Test
-	void shouldConvertToEntityWhenNotFields() {
-		assertEquals(Person.builder().build().toEntity(), new PersonEntity());
+	void shouldConvertToDTO() {
+		PersonEntity person = new TestInstances().personEntity();
+
+		Person dto = new PersonMapper().toDTO(person);
+
+		assertEquals(dto, new TestInstances().person());
 	}
+
 }

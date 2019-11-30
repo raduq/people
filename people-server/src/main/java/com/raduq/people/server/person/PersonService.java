@@ -20,8 +20,9 @@ public class PersonService {
 			.orElseThrow(() -> new PersonNotFoundException(id));
 	}
 
-	public List<Person> getPeople() {
-		return StreamSupport.stream(repository.findAll().spliterator(), false)
+	public List<Person> getPeople(String firstName, String lastName) {
+		return repository.findByFilters(firstName, lastName)
+			.stream()
 			.map(PersonEntity::toDTO)
 			.collect(Collectors.toList());
 	}
@@ -31,6 +32,7 @@ public class PersonService {
 	}
 
 	public Person update(Long id, Person updatePerson) {
+		repository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
 		return repository.save(updatePerson.toEntity()).toDTO();
 	}
 

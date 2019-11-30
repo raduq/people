@@ -20,11 +20,14 @@
 	</modules>
 
 	<properties>
-		<junit.version>5.5.2</junit.version>
+		<junit-jupiter.version>5.5.2</junit-jupiter.version>
+		<mockito.version>3.2.0</mockito.version>
+		<mockito-extension.version>2.23.0</mockito-extension.version>
+
 		<swagger.version>2.9.2</swagger.version>
 		<h2.version>1.4.197</h2.version>
 
-		<java.version>1.13</java.version>
+		<java.version>13</java.version>
 	</properties>
 
 	<dependencyManagement>
@@ -44,7 +47,24 @@
 				<artifactId>h2</artifactId>
 				<version>${h2.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit-jupiter.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>${mockito-extension.version}</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

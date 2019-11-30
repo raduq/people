@@ -11,10 +11,6 @@ public class Pet {
 	private final Integer age;
 
 	public PetEntity toEntity() {
-		return PetEntity.builder()
-			.id(id)
-			.name(name)
-			.age(age)
-			.build();
+		return new PetMapper().toEntity(this);
 	}
 }

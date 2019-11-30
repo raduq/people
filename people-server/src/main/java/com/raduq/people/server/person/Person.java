@@ -8,9 +8,6 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.Optional.ofNullable;
 
 @Data
 @Builder
@@ -23,13 +20,6 @@ public class Person {
 	private final List<Pet> pets;
 
 	public PersonEntity toEntity() {
-		return PersonEntity.builder()
-			.id(id)
-			.firstName(firstName)
-			.lastName(lastName)
-			.birthDate(birthDate)
-			.address(ofNullable(address).map(Address::toEntity).orElse(null))
-			.pets(pets.stream().map(Pet::toEntity).collect(Collectors.toList()))
-			.build();
+		return new PersonMapper().toEntity(this);
 	}
 }

@@ -15,14 +15,6 @@ public class Address {
 	private final String country;
 
 	public AddressEntity toEntity() {
-		return AddressEntity.builder()
-			.id(id)
-			.street(street)
-			.zipCode(zipCode)
-			.number(number)
-			.numberAddition(numberAddition)
-			.city(city)
-			.country(country)
-			.build();
+		return new AddressMapper().toEntity(this);
 	}
 }

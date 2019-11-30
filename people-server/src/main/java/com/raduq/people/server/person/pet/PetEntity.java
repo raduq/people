@@ -3,6 +3,7 @@ package com.raduq.people.server.person.pet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+@Getter
 @Builder
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -28,11 +29,7 @@ public class PetEntity {
 	private Integer age;
 
 	public Pet toDTO() {
-		return Pet.builder()
-			.id(id)
-			.name(name)
-			.age(age)
-			.build();
+		return new PetMapper().toDTO(this);
 	}
 
 }

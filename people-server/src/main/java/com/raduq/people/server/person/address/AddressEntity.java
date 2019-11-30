@@ -3,6 +3,7 @@ package com.raduq.people.server.person.address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Getter
 @Builder
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -35,15 +37,7 @@ public class AddressEntity {
 	private String country;
 
 	public Address toDTO() {
-		return Address.builder()
-			.id(id)
-			.street(street)
-			.zipCode(zipCode)
-			.number(number)
-			.numberAddition(numberAddition)
-			.city(city)
-			.country(country)
-			.build();
+		return new AddressMapper().toDTO(this);
 	}
 
 }

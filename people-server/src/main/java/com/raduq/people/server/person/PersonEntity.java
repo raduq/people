@@ -5,12 +5,14 @@ import com.raduq.people.server.person.pet.PetEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
 @Builder
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -33,13 +35,7 @@ public class PersonEntity {
 	private List<PetEntity> pets;
 
 	public Person toDTO() {
-		return Person.builder()
-			.id(id)
-			.firstName(firstName)
-			.lastName(lastName)
-			.birthDate(birthDate)
-			.address(address.toDTO())
-			.build();
+		return new PersonMapper().toDTO(this);
 	}
 
 }

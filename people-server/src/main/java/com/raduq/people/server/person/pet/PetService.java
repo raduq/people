@@ -30,6 +30,7 @@ public class PetService {
 	}
 
 	public Pet update(Long id, Pet pet) {
+		repository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
 		return repository.save(pet.toEntity()).toDTO();
 	}
 

@@ -22,8 +22,9 @@ public class PersonController {
 	}
 
 	@GetMapping
-	public List<Person> getAll() {
-		return service.getPeople();
+	public List<Person> getAll(@RequestParam(value = "first-name", required = false) String firstName,
+							   @RequestParam(value = "last-name", required = false) String lastName) {
+		return service.getPeople(firstName, lastName);
 	}
 
 	@PostMapping
