@@ -44,7 +44,7 @@ public class AddressController {
 	public Address getAddress(
 		@ApiParam(value = "id", required = true)
 		@PathVariable("id") Long id) {
-		return service.getAddress(id);
+		return service.getAddress(id).toDTO();
 	}
 
 	@ApiOperation(value = "Update an existing address")
@@ -55,7 +55,7 @@ public class AddressController {
 	})
 	@PutMapping("/{id}")
 	public Address update(@PathVariable Long personId, @PathVariable Long id, @RequestBody Address address) {
-		return service.update(personId, id, address);
+		return service.update(personId, id, address).toDTO();
 	}
 
 	@ApiOperation(value = "Delete an existing address")

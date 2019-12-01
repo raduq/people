@@ -1,8 +1,7 @@
 package com.raduq.people.server.person.pet;
 
 import com.raduq.people.server.person.PersonEntity;
-import com.raduq.people.server.person.PersonNotFoundException;
-import com.raduq.people.server.person.PersonRepository;
+import com.raduq.people.server.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,39 +15,33 @@ public class PetService {
 	@Autowired
 	private PetRepository repository;
 	@Autowired
-	private PersonRepository personRepository;
+	private PersonService personService;
 
-	public Pet getPet(Long id) {
+	public PetEntity getPet(Long id) {
 		return repository.findById(id)
-			.map(PetEntity::toDTO)
 			.orElseThrow(() -> new PetNotFoundException(id));
 	}
 
-	public List<Pet> getPets() {
-		return StreamSupport.stream(repository.findAll().spliterator(), false)
-			.map(PetEntity::toDTO)
-			.collect(Collectors.toList());
+	public Iterable<PetEntity> getPets() {
+		return repository.findAll();
 	}
 
-	public Pet save(Long personId, Pet pet) {
-		PersonEntity person = personRepository.findById(personId)
-			.orElseThrow(() -> new PersonNotFoundException(personId));
+	public PetEntity save(Long personId, Pet pet) {
+		PersonEntity person = personService.getPerson(personId);
 		person.addPet(pet.toEntity());
-		PetEntity savedPet = repository.save(pet.toEntity());
-		return savedPet.toDTO();
+		return repository.save(pet.toEntity());
 	}
 
-	public Pet update(Long personId, Long id, Pet pet) {
-		PetEntity petFound = repository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
-		PersonEntity person = personRepository.findById(personId)
-			.orElseThrow(() -> new PersonNotFoundException(personId));
+	public PetEntity update(Long personId, Long id, Pet pet) {
+		PetEntity petFound = getPet(id);
+		PersonEntity person = personService.getPerson(personId);
 		person.putPet(person.getPets().indexOf(petFound), pet.toEntity());
-		return repository.save(pet.toEntity()).toDTO();
+		return repository.save(pet.toEntity());
 	}
 
 	public void delete(Long personId, Long id) {
-		PetEntity pet = repository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
-		PersonEntity personEntity = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException(personId));
+		PetEntity pet = getPet(id);
+		PersonEntity personEntity = personService.getPerson(personId);
 		personEntity.getPets().remove(pet);
 		repository.delete(pet);
 	}

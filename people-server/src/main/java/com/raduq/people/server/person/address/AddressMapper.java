@@ -25,4 +25,5 @@ public final class AddressMapper {
 			.country(address.getCountry())
 			.build();
 	}
+
 }

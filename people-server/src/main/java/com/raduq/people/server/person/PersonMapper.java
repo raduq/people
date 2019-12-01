@@ -7,7 +7,9 @@ import com.raduq.people.server.person.pet.PetEntity;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static java.util.Optional.ofNullable;
 
@@ -33,6 +35,12 @@ public final class PersonMapper {
 			.address(addressToDTO(person))
 			.pets(petsToDTO(person))
 			.build();
+	}
+
+	public final List<Person> toListOfDTO(Spliterator<PersonEntity> entities) {
+		return StreamSupport.stream(entities, false)
+			.map(PersonEntity::toDTO)
+			.collect(Collectors.toList());
 	}
 
 	private List<PetEntity> petsToEntity(Person person) {

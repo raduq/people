@@ -1,14 +1,10 @@
 package com.raduq.people.server.person.address;
 
 import com.raduq.people.server.person.PersonEntity;
-import com.raduq.people.server.person.PersonNotFoundException;
-import com.raduq.people.server.person.PersonRepository;
+import com.raduq.people.server.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class AddressService {
@@ -16,24 +12,24 @@ public class AddressService {
 	@Autowired
 	private AddressRepository repository;
 	@Autowired
-	private PersonRepository personRepository;
+	private PersonService personService;
 
-	public Address getAddress(Long id) {
+	public AddressEntity getAddress(Long id) {
 		return repository.findById(id)
-			.map(AddressEntity::toDTO)
 			.orElseThrow(() -> new AddressNotFoundException(id));
 	}
 
-	public Address update(Long personId, Long id, Address address) {
-		AddressEntity foundAddress = repository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
-		PersonEntity person = personRepository.findById(personId)
-			.orElseThrow(() -> new PersonNotFoundException(personId));
+	public AddressEntity update(Long personId, Long id, Address address) {
+		AddressEntity foundAddress = getAddress(id);
+		PersonEntity person = personService.getPerson(personId);
+		AddressEntity addressToBeUpdated = address.toEntity();
+		addressToBeUpdated.setId(foundAddress.getId());
 		person.setAddress(address.toEntity());
-		return repository.save(address.toEntity()).toDTO();
+		return repository.save(addressToBeUpdated);
 	}
 
 	public void delete(Long id) {
-		AddressEntity addressEntity = repository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
+		AddressEntity addressEntity = getAddress(id);
 		repository.delete(addressEntity);
 	}
 }

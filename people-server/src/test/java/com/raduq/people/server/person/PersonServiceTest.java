@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,20 +33,20 @@ public class PersonServiceTest {
 		when(repository.findById(1L))
 			.thenReturn(Optional.of(testInstances.personEntity()));
 
-		Person person = service.getPerson(1L);
+		PersonEntity person = service.getPerson(1L);
 
-		assertEquals(person, testInstances.person());
+		assertEquals(person, testInstances.personEntity());
 	}
 
 	@Test
 	@DisplayName("Should get all people")
 	public void shouldGetAll() {
-		when(repository.findByFilters(null, null))
+		when(repository.findAll())
 			.thenReturn(Collections.singletonList(testInstances.personEntity()));
 
-		List<Person> people = service.getPeople(null, null);
+		Iterable<PersonEntity> people = service.getPeople();
 
-		assertEquals(people, Collections.singletonList(testInstances.person()));
+		assertEquals(people.iterator().next(), testInstances.personEntity());
 	}
 
 	@Test
@@ -56,34 +55,32 @@ public class PersonServiceTest {
 		when(repository.findByFilters("John", "Wayne"))
 			.thenReturn(Collections.singletonList(testInstances.personEntity()));
 
-		List<Person> people = service.getPeople("John","Wayne");
+		Iterable<PersonEntity> people = service.getPeople("John", "Wayne");
 
-		assertEquals(people, Collections.singletonList(testInstances.person()));
+		assertEquals(people.iterator().next(), testInstances.personEntity());
 	}
 
 	@Test
 	@DisplayName("Should create person")
 	public void shouldCreatePerson() {
-		Person person = testInstances.person();
 		PersonEntity entity = testInstances.personEntity();
 		when(repository.save(entity)).thenReturn(entity);
 
-		Person saved = service.save(person);
+		PersonEntity saved = service.save(testInstances.person());
 
-		assertEquals(saved, person);
+		assertEquals(saved, testInstances.personEntity());
 	}
 
 	@Test
 	@DisplayName("Should update person")
 	public void shouldUpdatePerson() {
-		Person person = testInstances.person();
 		PersonEntity entity = testInstances.personEntity();
 		when(repository.findById(1L)).thenReturn(Optional.of(entity));
 		when(repository.save(entity)).thenReturn(entity);
 
-		Person updated = service.update(1L, person);
+		PersonEntity updated = service.update(1L, testInstances.person());
 
-		assertEquals(updated, person);
+		assertEquals(updated, testInstances.personEntity());
 	}
 
 	@Test

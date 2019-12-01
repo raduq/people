@@ -36,7 +36,7 @@ public class PetController {
 	@GetMapping("/{id}")
 	public Pet getPet(@ApiParam(value = "id", required = true)
 					  @PathVariable(value = "id") Long id) {
-		return service.getPet(id);
+		return service.getPet(id).toDTO();
 	}
 
 	@ApiOperation(value = "Get all pets")
@@ -46,7 +46,7 @@ public class PetController {
 	})
 	@GetMapping
 	public List<Pet> getPets() {
-		return service.getPets();
+		return new PetMapper().toListOfDTO(service.getPets().spliterator());
 	}
 
 	@ApiOperation(value = "Create a new pet")
@@ -60,7 +60,7 @@ public class PetController {
 		@RequestBody Pet pet,
 		@ApiParam(value = "Id of the person owner of the pet to be created", required = true)
 		@PathVariable("personId") Long personId) {
-		return service.save(personId, pet);
+		return service.save(personId, pet).toDTO();
 	}
 
 	@ApiOperation(value = "Update an existing pet")
@@ -77,7 +77,7 @@ public class PetController {
 		@PathVariable Long personId,
 		@ApiParam(value = "Pet data to be updated", required = true)
 		@RequestBody Pet pet) {
-		return service.update(personId, id, pet);
+		return service.update(personId, id, pet).toDTO();
 	}
 
 	@ApiOperation(value = "Delete an existing pet")

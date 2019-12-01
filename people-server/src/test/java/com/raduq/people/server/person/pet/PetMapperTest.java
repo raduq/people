@@ -6,6 +6,10 @@ import com.raduq.people.server.person.address.AddressEntity;
 import com.raduq.people.server.person.address.AddressMapper;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PetMapperTest {
@@ -28,4 +32,13 @@ public class PetMapperTest {
 		assertEquals(dto, new TestInstances().pet());
 	}
 
+	@Test
+	void shouldConvertToListOfDTO() {
+		PetEntity pet = new TestInstances().petEntity();
+		List<PetEntity> petEntities = Collections.singletonList(pet);
+
+		List<Pet> dtos = new PetMapper().toListOfDTO(petEntities.spliterator());
+
+		assertEquals(dtos.get(0), new TestInstances().pet());
+	}
 }

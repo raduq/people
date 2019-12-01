@@ -15,39 +15,35 @@ public class PersonService {
 	@Autowired
 	private PersonRepository repository;
 
-	public Person getPerson(Long id) {
+	public PersonEntity getPerson(Long id) {
 		return repository.findById(id)
-			.map(PersonEntity::toDTO)
 			.orElseThrow(() -> new PersonNotFoundException(id));
 	}
 
-	public List<Person> getPeople(){
-		return StreamSupport.stream(repository.findAll().spliterator(), false)
-			.map(PersonEntity::toDTO)
-			.collect(Collectors.toList());
+	public Iterable<PersonEntity> getPeople() {
+		return repository.findAll();
 	}
 
-	public List<Person> getPeople(String firstName, String lastName) {
-		if(Objects.isNull(firstName) && Objects.isNull(lastName)){
+	public Iterable<PersonEntity> getPeople(String firstName, String lastName) {
+		if (Objects.isNull(firstName) && Objects.isNull(lastName)) {
 			return getPeople();
 		}
-		return repository.findByFilters(firstName, lastName)
-			.stream()
-			.map(PersonEntity::toDTO)
-			.collect(Collectors.toList());
+		return repository.findByFilters(firstName, lastName);
 	}
 
-	public Person save(Person person) {
-		return repository.save(person.toEntity()).toDTO();
+	public PersonEntity save(Person person) {
+		return repository.save(person.toEntity());
 	}
 
-	public Person update(Long id, Person updatePerson) {
-		repository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
-		return repository.save(updatePerson.toEntity()).toDTO();
+	public PersonEntity update(Long id, Person updatePerson) {
+		PersonEntity foundEntity = getPerson(id);
+		PersonEntity personToUpdate = updatePerson.toEntity();
+		personToUpdate.setId(foundEntity.getId());
+		return repository.save(personToUpdate);
 	}
 
 	public void delete(Long id) {
-		PersonEntity person = repository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+		PersonEntity person = getPerson(id);
 		repository.delete(person);
 	}
 }

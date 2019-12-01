@@ -37,7 +37,7 @@ public class PersonController {
 	public Person getPerson(
 		@ApiParam(value = "id", required = true)
 		@PathVariable Long id) {
-		return service.getPerson(id);
+		return service.getPerson(id).toDTO();
 	}
 
 	@ApiOperation(value = "Get person by filters")
@@ -51,7 +51,8 @@ public class PersonController {
 		@RequestParam(value = "first-name", required = false) String firstName,
 		@ApiParam(value = "Last name of the person")
 		@RequestParam(value = "last-name", required = false) String lastName) {
-		return service.getPeople(firstName, lastName);
+		return new PersonMapper()
+			.toListOfDTO(service.getPeople(firstName, lastName).spliterator());
 	}
 
 	@ApiOperation(value = "Create a new person")
@@ -63,7 +64,7 @@ public class PersonController {
 	public Person create(
 		@ApiParam(value = "Person to be created", required = true)
 		@RequestBody Person person) {
-		return service.save(person);
+		return service.save(person).toDTO();
 	}
 
 	@ApiOperation(value = "Update an existing person")
@@ -78,7 +79,7 @@ public class PersonController {
 		@PathVariable Long id,
 		@ApiParam(value = "Person data to be updated", required = true)
 		@RequestBody Person person) {
-		return service.update(id, person);
+		return service.update(id, person).toDTO();
 	}
 
 	@ApiOperation(value = "Delete an existing person")

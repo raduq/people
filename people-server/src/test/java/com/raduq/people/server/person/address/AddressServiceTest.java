@@ -2,6 +2,7 @@ package com.raduq.people.server.person.address;
 
 import com.raduq.people.server.TestInstances;
 import com.raduq.people.server.person.PersonRepository;
+import com.raduq.people.server.person.PersonService;
 import com.raduq.people.server.person.pet.Pet;
 import com.raduq.people.server.person.pet.PetEntity;
 import com.raduq.people.server.person.pet.PetNotFoundException;
@@ -30,7 +31,7 @@ public class AddressServiceTest {
 	@Mock
 	private AddressRepository repository;
 	@Mock
-	private PersonRepository personRepository;
+	private PersonService personService;
 	@InjectMocks
 	private AddressService service;
 
@@ -42,23 +43,22 @@ public class AddressServiceTest {
 		when(repository.findById(1L))
 			.thenReturn(Optional.of(testInstances.addressEntity()));
 
-		Address address = service.getAddress(1L);
+		AddressEntity address = service.getAddress(1L);
 
-		assertEquals(address, testInstances.address());
+		assertEquals(address, testInstances.addressEntity());
 	}
 
 	@Test
 	@DisplayName("Should update address")
 	public void shouldUpdateAddress() {
-		Address address = testInstances.address();
 		AddressEntity entity = testInstances.addressEntity();
-		when(personRepository.findById(1L)).thenReturn(Optional.of(testInstances.personEntity()));
+		when(personService.getPerson(1L)).thenReturn(testInstances.personEntity());
 		when(repository.findById(1L)).thenReturn(Optional.of(entity));
 		when(repository.save(entity)).thenReturn(entity);
 
-		Address updated = service.update(1L,1L, address);
+		AddressEntity updated = service.update(1L, 1L, testInstances.address());
 
-		assertEquals(updated, address);
+		assertEquals(updated, testInstances.addressEntity());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class AddressServiceTest {
 		Address address = testInstances.address();
 		when(repository.findById(1L)).thenReturn(Optional.empty());
 
-		assertThrows(AddressNotFoundException.class, () -> service.update(1L,1L, address));
+		assertThrows(AddressNotFoundException.class, () -> service.update(1L, 1L, address));
 	}
 
 	@Test
