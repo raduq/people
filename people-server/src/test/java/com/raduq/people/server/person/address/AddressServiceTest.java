@@ -1,6 +1,7 @@
 package com.raduq.people.server.person.address;
 
 import com.raduq.people.server.TestInstances;
+import com.raduq.people.server.person.PersonRepository;
 import com.raduq.people.server.person.pet.Pet;
 import com.raduq.people.server.person.pet.PetEntity;
 import com.raduq.people.server.person.pet.PetNotFoundException;
@@ -28,6 +29,8 @@ public class AddressServiceTest {
 
 	@Mock
 	private AddressRepository repository;
+	@Mock
+	private PersonRepository personRepository;
 	@InjectMocks
 	private AddressService service;
 
@@ -45,37 +48,15 @@ public class AddressServiceTest {
 	}
 
 	@Test
-	@DisplayName("Should get all addresses")
-	public void shouldGetAll() {
-		when(repository.findAll())
-			.thenReturn(Collections.singletonList(testInstances.addressEntity()));
-
-		List<Address> addresses = service.getAddresses();
-
-		assertEquals(addresses, Collections.singletonList(testInstances.address()));
-	}
-
-	@Test
-	@DisplayName("Should create address")
-	public void shouldCreatePet() {
-		Address address = testInstances.address();
-		AddressEntity entity = testInstances.addressEntity();
-		when(repository.save(entity)).thenReturn(entity);
-
-		Address saved = service.save(address);
-
-		assertEquals(saved, address);
-	}
-
-	@Test
 	@DisplayName("Should update address")
 	public void shouldUpdateAddress() {
 		Address address = testInstances.address();
 		AddressEntity entity = testInstances.addressEntity();
+		when(personRepository.findById(1L)).thenReturn(Optional.of(testInstances.personEntity()));
 		when(repository.findById(1L)).thenReturn(Optional.of(entity));
 		when(repository.save(entity)).thenReturn(entity);
 
-		Address updated = service.update(1L, address);
+		Address updated = service.update(1L,1L, address);
 
 		assertEquals(updated, address);
 	}
@@ -86,7 +67,7 @@ public class AddressServiceTest {
 		Address address = testInstances.address();
 		when(repository.findById(1L)).thenReturn(Optional.empty());
 
-		assertThrows(AddressNotFoundException.class, () -> service.update(1L, address));
+		assertThrows(AddressNotFoundException.class, () -> service.update(1L,1L, address));
 	}
 
 	@Test

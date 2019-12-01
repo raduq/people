@@ -73,9 +73,11 @@ public class PetController {
 	public Pet update(
 		@ApiParam(value = "Id of the pet", required = true)
 		@PathVariable Long id,
+		@ApiParam(value = "Id of the person", required = true)
+		@PathVariable Long personId,
 		@ApiParam(value = "Pet data to be updated", required = true)
 		@RequestBody Pet pet) {
-		return service.update(id, pet);
+		return service.update(personId, id, pet);
 	}
 
 	@ApiOperation(value = "Delete an existing pet")
@@ -85,8 +87,8 @@ public class PetController {
 		@ApiResponse(code = 500, message = "Server failed to respond")
 	})
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
-		service.delete(id);
+	public void delete(@PathVariable Long personId, @PathVariable Long id) {
+		service.delete(personId, id);
 	}
 
 }

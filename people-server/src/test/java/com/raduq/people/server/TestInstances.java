@@ -8,29 +8,34 @@ import com.raduq.people.server.person.pet.Pet;
 import com.raduq.people.server.person.pet.PetEntity;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestInstances {
 
 	public Person person() {
+		List<Pet> pets = new ArrayList<>();
+		pets.add(pet());
 		return Person.builder()
 			.id(1L)
 			.firstName("John")
 			.lastName("Wayne")
 			.birthDate(LocalDateTime.of(1988, 12, 23, 6, 0, 0))
 			.address(address())
-			.pets(Collections.singletonList(pet()))
+			.pets(pets)
 			.build();
 	}
 
 	public PersonEntity personEntity() {
+		List<PetEntity> pets = new ArrayList<>();
+		pets.add(petEntity());
 		return PersonEntity.builder()
 			.id(1L)
 			.firstName("John")
 			.lastName("Wayne")
 			.birthDate(LocalDateTime.of(1988, 12, 23, 6, 0, 0))
 			.address(addressEntity())
-			.pets(Collections.singletonList(petEntity()))
+			.pets(pets)
 			.build();
 	}
 
@@ -58,7 +63,7 @@ public class TestInstances {
 			.build();
 	}
 
-	public Pet pet(){
+	public Pet pet() {
 		return Pet.builder()
 			.id(1L)
 			.name("Toby")
@@ -66,7 +71,7 @@ public class TestInstances {
 			.build();
 	}
 
-	public PetEntity petEntity(){
+	public PetEntity petEntity() {
 		return PetEntity.builder()
 			.id(1L)
 			.name("Toby")

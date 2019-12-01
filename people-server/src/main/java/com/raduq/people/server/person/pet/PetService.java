@@ -33,18 +33,23 @@ public class PetService {
 	public Pet save(Long personId, Pet pet) {
 		PersonEntity person = personRepository.findById(personId)
 			.orElseThrow(() -> new PersonNotFoundException(personId));
-		person.getPets().add(pet.toEntity());
+		person.addPet(pet.toEntity());
 		PetEntity savedPet = repository.save(pet.toEntity());
 		return savedPet.toDTO();
 	}
 
-	public Pet update(Long id, Pet pet) {
-		repository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
+	public Pet update(Long personId, Long id, Pet pet) {
+		PetEntity petFound = repository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
+		PersonEntity person = personRepository.findById(personId)
+			.orElseThrow(() -> new PersonNotFoundException(personId));
+		person.putPet(person.getPets().indexOf(petFound), pet.toEntity());
 		return repository.save(pet.toEntity()).toDTO();
 	}
 
-	public void delete(Long id) {
+	public void delete(Long personId, Long id) {
 		PetEntity pet = repository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
+		PersonEntity personEntity = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException(personId));
+		personEntity.getPets().remove(pet);
 		repository.delete(pet);
 	}
 }

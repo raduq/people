@@ -1,6 +1,5 @@
 package com.raduq.people.server.person.address;
 
-import com.raduq.people.server.person.pet.Pet;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -48,26 +47,23 @@ public class AddressController {
 		return service.getAddress(id);
 	}
 
-	@ApiOperation(value = "Get all addresses")
+	@ApiOperation(value = "Update an existing address")
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "Address found", response = Address.class),
+		@ApiResponse(code = 200, message = "Address updated", response = Address.class),
+		@ApiResponse(code = 404, message = "Address not found with specified Id"),
 		@ApiResponse(code = 500, message = "Server failed to respond")
 	})
-	@GetMapping
-	public List<Address> getAddresses() {
-		return service.getAddresses();
-	}
-
-	@PostMapping
-	public Address create(@RequestBody Address address) {
-		return service.save(address);
-	}
-
 	@PutMapping("/{id}")
-	public Address update(@PathVariable Long id, @RequestBody Address address) {
-		return service.update(id, address);
+	public Address update(@PathVariable Long personId, @PathVariable Long id, @RequestBody Address address) {
+		return service.update(personId, id, address);
 	}
 
+	@ApiOperation(value = "Delete an existing address")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "Address deleted"),
+		@ApiResponse(code = 404, message = "Address not found with specified Id"),
+		@ApiResponse(code = 500, message = "Server failed to respond")
+	})
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		service.delete(id);

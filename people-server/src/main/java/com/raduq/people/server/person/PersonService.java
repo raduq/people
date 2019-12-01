@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,7 +21,16 @@ public class PersonService {
 			.orElseThrow(() -> new PersonNotFoundException(id));
 	}
 
+	public List<Person> getPeople(){
+		return StreamSupport.stream(repository.findAll().spliterator(), false)
+			.map(PersonEntity::toDTO)
+			.collect(Collectors.toList());
+	}
+
 	public List<Person> getPeople(String firstName, String lastName) {
+		if(Objects.isNull(firstName) && Objects.isNull(lastName)){
+			return getPeople();
+		}
 		return repository.findByFilters(firstName, lastName)
 			.stream()
 			.map(PersonEntity::toDTO)

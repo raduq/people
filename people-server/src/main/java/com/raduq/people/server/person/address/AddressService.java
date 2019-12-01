@@ -1,5 +1,8 @@
 package com.raduq.people.server.person.address;
 
+import com.raduq.people.server.person.PersonEntity;
+import com.raduq.people.server.person.PersonNotFoundException;
+import com.raduq.people.server.person.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,8 @@ public class AddressService {
 
 	@Autowired
 	private AddressRepository repository;
+	@Autowired
+	private PersonRepository personRepository;
 
 	public Address getAddress(Long id) {
 		return repository.findById(id)
@@ -19,18 +24,11 @@ public class AddressService {
 			.orElseThrow(() -> new AddressNotFoundException(id));
 	}
 
-	public List<Address> getAddresses() {
-		return StreamSupport.stream(repository.findAll().spliterator(), false)
-			.map(AddressEntity::toDTO)
-			.collect(Collectors.toList());
-	}
-
-	public Address save(Address address) {
-		return repository.save(address.toEntity()).toDTO();
-	}
-
-	public Address update(Long id, Address address) {
-		repository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
+	public Address update(Long personId, Long id, Address address) {
+		AddressEntity foundAddress = repository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
+		PersonEntity person = personRepository.findById(personId)
+			.orElseThrow(() -> new PersonNotFoundException(personId));
+		person.setAddress(address.toEntity());
 		return repository.save(address.toEntity()).toDTO();
 	}
 

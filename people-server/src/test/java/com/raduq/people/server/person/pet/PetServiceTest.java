@@ -1,6 +1,8 @@
 package com.raduq.people.server.person.pet;
 
 import com.raduq.people.server.TestInstances;
+import com.raduq.people.server.person.PersonNotFoundException;
+import com.raduq.people.server.person.PersonRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +25,8 @@ public class PetServiceTest {
 
 	@Mock
 	private PetRepository repository;
+	@Mock
+	private PersonRepository personRepository;
 	@InjectMocks
 	private PetService service;
 
@@ -55,9 +59,11 @@ public class PetServiceTest {
 	public void shouldCreatePet() {
 		Pet pet = testInstances.pet();
 		PetEntity entity = testInstances.petEntity();
+		when(personRepository.findById(1L))
+			.thenReturn(Optional.of(testInstances.personEntity()));
 		when(repository.save(entity)).thenReturn(entity);
 
-		Pet saved = service.save(pet);
+		Pet saved = service.save(1L, pet);
 
 		assertEquals(saved, pet);
 	}
@@ -67,10 +73,12 @@ public class PetServiceTest {
 	public void shouldUpdatePet() {
 		Pet pet = testInstances.pet();
 		PetEntity entity = testInstances.petEntity();
+		when(personRepository.findById(1L))
+			.thenReturn(Optional.of(testInstances.personEntity()));
 		when(repository.findById(1L)).thenReturn(Optional.of(entity));
 		when(repository.save(entity)).thenReturn(entity);
 
-		Pet updated = service.update(1L, pet);
+		Pet updated = service.update(1L, 1L, pet);
 
 		assertEquals(updated, pet);
 	}
@@ -81,7 +89,17 @@ public class PetServiceTest {
 		Pet pet = testInstances.pet();
 		when(repository.findById(1L)).thenReturn(Optional.empty());
 
-		assertThrows(PetNotFoundException.class, () -> service.update(1L, pet));
+		assertThrows(PetNotFoundException.class, () -> service.update(1L, 1L, pet));
+	}
+
+	@Test
+	@DisplayName("Should not update person when not exists")
+	public void shouldNotUpdatePetWhenPersonNotFound() {
+		Pet pet = testInstances.pet();
+		when(repository.findById(1L)).thenReturn(Optional.of(testInstances.petEntity()));
+		when(personRepository.findById(1L)).thenReturn(Optional.empty());
+
+		assertThrows(PersonNotFoundException.class, () -> service.update(1L, 1L, pet));
 	}
 
 	@Test
@@ -90,9 +108,11 @@ public class PetServiceTest {
 		PetEntity entity = testInstances.petEntity();
 		when(repository.findById(1L))
 			.thenReturn(Optional.of(testInstances.petEntity()));
+		when(personRepository.findById(1L))
+			.thenReturn(Optional.of(testInstances.personEntity()));
 		doNothing().when(repository).delete(entity);
 
-		service.delete(1L);
+		service.delete(1L, 1L);
 
 		verify(repository).delete(entity);
 	}
@@ -102,6 +122,16 @@ public class PetServiceTest {
 	public void shouldNotDeleteWhenPetNotFound() {
 		when(repository.findById(1L)).thenReturn(Optional.empty());
 
-		assertThrows(PetNotFoundException.class, () -> service.delete(1L));
+		assertThrows(PetNotFoundException.class, () -> service.delete(1L, 1L));
+	}
+
+	@Test
+	@DisplayName("Should not delete pet when person not exists")
+	public void shouldNotDeleteWhenPersonNotFound() {
+		when(repository.findById(1L))
+			.thenReturn(Optional.of(testInstances.petEntity()));
+		when(personRepository.findById(1L)).thenReturn(Optional.empty());
+
+		assertThrows(PersonNotFoundException.class, () -> service.delete(1L, 1L));
 	}
 }
