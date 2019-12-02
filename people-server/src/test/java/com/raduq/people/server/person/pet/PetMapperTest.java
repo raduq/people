@@ -1,12 +1,7 @@
 package com.raduq.people.server.person.pet;
 
 import com.raduq.people.server.TestInstances;
-import com.raduq.people.server.person.address.Address;
-import com.raduq.people.server.person.address.AddressEntity;
-import com.raduq.people.server.person.address.AddressMapper;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

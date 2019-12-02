@@ -1,9 +1,6 @@
 package com.raduq.people.server.person;
 
 import com.raduq.people.server.TestInstances;
-import com.raduq.people.server.person.pet.Pet;
-import com.raduq.people.server.person.pet.PetEntity;
-import com.raduq.people.server.person.pet.PetMapper;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

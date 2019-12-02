@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -30,7 +30,7 @@ public class PersonEntity {
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	@Column(name = "birth_date")
-	private LocalDateTime birthDate;
+	private Date birthDate;
 	@ManyToOne(cascade = CascadeType.ALL)
 	private AddressEntity address;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

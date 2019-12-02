@@ -7,8 +7,8 @@ import com.raduq.people.server.person.address.AddressEntity;
 import com.raduq.people.server.person.pet.Pet;
 import com.raduq.people.server.person.pet.PetEntity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TestInstances {
@@ -20,7 +20,7 @@ public class TestInstances {
 			.id(1L)
 			.firstName("John")
 			.lastName("Wayne")
-			.birthDate(LocalDateTime.of(1988, 12, 23, 6, 0, 0))
+			.birthDate(new Date())
 			.address(address())
 			.pets(pets)
 			.build();
@@ -33,7 +33,7 @@ public class TestInstances {
 			.id(1L)
 			.firstName("John")
 			.lastName("Wayne")
-			.birthDate(LocalDateTime.of(1988, 12, 23, 6, 0, 0))
+			.birthDate(new Date())
 			.address(addressEntity())
 			.pets(pets)
 			.build();

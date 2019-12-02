@@ -1,22 +1,13 @@
 package com.raduq.people.server.person.address;
 
 import com.raduq.people.server.TestInstances;
-import com.raduq.people.server.person.PersonRepository;
 import com.raduq.people.server.person.PersonService;
-import com.raduq.people.server.person.pet.Pet;
-import com.raduq.people.server.person.pet.PetEntity;
-import com.raduq.people.server.person.pet.PetNotFoundException;
-import com.raduq.people.server.person.pet.PetRepository;
-import com.raduq.people.server.person.pet.PetService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
