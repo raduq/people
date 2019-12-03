@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +35,7 @@ public class PersonServiceTest {
 
 		PersonEntity person = service.getPerson(1L);
 
-		assertEquals(person, testInstances.personEntity());
+		assertEquals(person.getId(), testInstances.personEntity().getId());
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class PersonServiceTest {
 
 		Iterable<PersonEntity> people = service.getPeople();
 
-		assertEquals(people.iterator().next(), testInstances.personEntity());
+		assertEquals(people.iterator().next().getId(), testInstances.personEntity().getId());
 	}
 
 	@Test
@@ -57,30 +57,29 @@ public class PersonServiceTest {
 
 		Iterable<PersonEntity> people = service.getPeople("John", "Wayne");
 
-		assertEquals(people.iterator().next(), testInstances.personEntity());
+		assertEquals(people.iterator().next().getId(), testInstances.personEntity().getId());
 	}
 
 	@Test
 	@DisplayName("Should create person")
 	public void shouldCreatePerson() {
-		PersonEntity entity = testInstances.personEntity();
-		when(repository.save(entity)).thenReturn(entity);
+		Person person = testInstances.person();
+		service.save(person);
 
-		PersonEntity saved = service.save(testInstances.person());
-
-		assertEquals(saved, testInstances.personEntity());
+		verify(repository).save(person.toEntity());
 	}
 
 	@Test
 	@DisplayName("Should update person")
 	public void shouldUpdatePerson() {
 		PersonEntity entity = testInstances.personEntity();
+		Person person = testInstances.person();
 		when(repository.findById(1L)).thenReturn(Optional.of(entity));
-		when(repository.save(entity)).thenReturn(entity);
 
-		PersonEntity updated = service.update(1L, testInstances.person());
+		service.update(1L, person);
 
-		assertEquals(updated, testInstances.personEntity());
+		verify(repository).save(person.toEntity());
+
 	}
 
 	@Test
@@ -98,11 +97,10 @@ public class PersonServiceTest {
 		PersonEntity entity = testInstances.personEntity();
 		when(repository.findById(1L))
 			.thenReturn(Optional.of(testInstances.personEntity()));
-		doNothing().when(repository).delete(entity);
 
-		service.delete(1L);
+		service.delete(entity.getId());
 
-		verify(repository).delete(entity);
+		verify(repository).delete(any());
 	}
 
 	@Test

@@ -16,7 +16,10 @@ public class PersonMapperTest {
 
 		PersonEntity entity = new PersonMapper().toEntity(person);
 
-		assertEquals(entity, new TestInstances().personEntity());
+		assertEquals(entity.getId(), new TestInstances().person().getId());
+		assertEquals(entity.getFirstName(), new TestInstances().person().getFirstName());
+		assertEquals(entity.getLastName(), new TestInstances().person().getLastName());
+		assertEquals(entity.getAddress().getId(), new TestInstances().person().getAddress().getId());
 	}
 
 	@Test
@@ -25,7 +28,10 @@ public class PersonMapperTest {
 
 		Person dto = new PersonMapper().toDTO(person);
 
-		assertEquals(dto, new TestInstances().person());
+		assertEquals(dto.getId(), new TestInstances().person().getId());
+		assertEquals(dto.getFirstName(), new TestInstances().person().getFirstName());
+		assertEquals(dto.getLastName(), new TestInstances().person().getLastName());
+		assertEquals(dto.getAddress().getId(), new TestInstances().person().getAddress().getId());
 	}
 
 	@Test
@@ -35,7 +41,10 @@ public class PersonMapperTest {
 
 		List<Person> dtos = new PersonMapper().toListOfDTO(personEntities.spliterator());
 
-		assertEquals(dtos.get(0), new TestInstances().person());
+		assertEquals(dtos.get(0).getId(), new TestInstances().person().getId());
+		assertEquals(dtos.get(0).getFirstName(), new TestInstances().person().getFirstName());
+		assertEquals(dtos.get(0).getLastName(), new TestInstances().person().getLastName());
+		assertEquals(dtos.get(0).getAddress().getId(), new TestInstances().person().getAddress().getId());
 	}
 
 }

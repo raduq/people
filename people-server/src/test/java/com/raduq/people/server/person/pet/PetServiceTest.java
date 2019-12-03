@@ -1,6 +1,7 @@
 package com.raduq.people.server.person.pet;
 
 import com.raduq.people.server.TestInstances;
+import com.raduq.people.server.person.PersonEntity;
 import com.raduq.people.server.person.PersonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,13 +69,13 @@ public class PetServiceTest {
 	@DisplayName("Should update pet")
 	public void shouldUpdatePet() {
 		PetEntity entity = testInstances.petEntity();
-		when(personService.getPerson(1L)).thenReturn(testInstances.personEntity());
+		PersonEntity personEntity = testInstances.personEntity();
+		when(personService.getPerson(1L)).thenReturn(personEntity);
 		when(repository.findById(1L)).thenReturn(Optional.of(entity));
-		when(repository.save(entity)).thenReturn(entity);
 
-		PetEntity updated = service.update(1L, 1L, testInstances.pet());
+		service.update(1L, 1L, testInstances.pet());
 
-		assertEquals(updated, testInstances.petEntity());
+		verify(personService).update(1L, personEntity.toDTO());
 	}
 
 	@Test
