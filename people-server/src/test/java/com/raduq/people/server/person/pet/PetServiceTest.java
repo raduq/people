@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,10 +44,10 @@ public class PetServiceTest {
 	@Test
 	@DisplayName("Should get all pets")
 	public void shouldGetAll() {
-		when(repository.findAll())
-			.thenReturn(Collections.singletonList(testInstances.petEntity()));
+		when(personService.getPerson(1L))
+			.thenReturn(testInstances.personEntity());
 
-		Iterable<PetEntity> pets = service.getPets();
+		Iterable<PetEntity> pets = service.getPets(1L);
 
 		assertEquals(pets.iterator().next(), testInstances.petEntity());
 	}

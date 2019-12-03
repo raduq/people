@@ -1,13 +1,10 @@
 package com.raduq.people.server.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class PersonService {
@@ -32,14 +29,22 @@ public class PersonService {
 	}
 
 	public PersonEntity save(Person person) {
-		return repository.save(person.toEntity());
+		try {
+			return repository.save(person.toEntity());
+		} catch (DataIntegrityViolationException e) {
+			throw new PersonAlreadyExistException(person.getFirstName(), person.getLastName());
+		}
 	}
 
 	public PersonEntity update(Long id, Person updatePerson) {
-		PersonEntity foundEntity = getPerson(id);
-		PersonEntity personToUpdate = updatePerson.toEntity();
-		personToUpdate.setId(foundEntity.getId());
-		return repository.save(personToUpdate);
+		try {
+			PersonEntity foundEntity = getPerson(id);
+			PersonEntity personToUpdate = updatePerson.toEntity();
+			personToUpdate.setId(foundEntity.getId());
+			return repository.save(personToUpdate);
+		} catch (DataIntegrityViolationException e) {
+			throw new PersonAlreadyExistException(updatePerson.getFirstName(), updatePerson.getLastName());
+		}
 	}
 
 	public void delete(Long id) {

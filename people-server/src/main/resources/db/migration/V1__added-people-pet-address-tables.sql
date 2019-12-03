@@ -1,29 +1,27 @@
-create schema if not exists people;
-create table people.address(
+create table address(
   id int auto_increment primary key,
-  street varchar not null,
-  zip_code varchar not null,
-  number bigint,
-  number_addition bigint,
-  city varchar,
-  country varchar
+  street varchar(100) not null,
+  zip_code varchar(100) not null,
+  number int,
+  number_addition int,
+  city varchar(100),
+  country varchar(100)
 );
 
-create table people.pet(
+create table pet(
   id int auto_increment primary key,
-  name varchar not null,
+  name varchar(100) not null,
   age int
 );
 
-create table people.person(
+create table person(
   id int auto_increment primary key,
-  first_name varchar not null,
-  last_name varchar not null,
+  first_name varchar(100) not null,
+  last_name varchar(100) not null,
   birth_date timestamp,
-  address_id int
+  address_id int,
+  CONSTRAINT ctx_firstname_lastname UNIQUE (first_name, last_name),
+  foreign key(address_id) references address(id)
 );
-
-alter table people.person add foreign key(address_id) references people.address(id);
-alter table people.person add constraint ctx_firstname_lastname UNIQUE(first_name, last_name);
 
 

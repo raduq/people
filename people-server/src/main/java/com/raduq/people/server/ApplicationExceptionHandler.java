@@ -1,5 +1,6 @@
 package com.raduq.people.server;
 
+import com.raduq.people.server.person.PersonAlreadyExistException;
 import com.raduq.people.server.person.PersonNotFoundException;
 import com.raduq.people.server.person.address.AddressNotFoundException;
 import com.raduq.people.server.person.pet.PetNotFoundException;
@@ -14,13 +15,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
+	@ExceptionHandler(value = PersonAlreadyExistException.class)
+	protected ResponseEntity<?> handleConstraint(PersonAlreadyExistException ex, WebRequest request) {
+		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
+
 	@ExceptionHandler(value = {PersonNotFoundException.class, PetNotFoundException.class, AddressNotFoundException.class})
 	protected ResponseEntity<?> handleNotFound(RuntimeException ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
-//	@ExceptionHandler(MethodArgumentNotValidException.class)
-//	public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex, WebRequest request) {
-//		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-//	}
+
 }

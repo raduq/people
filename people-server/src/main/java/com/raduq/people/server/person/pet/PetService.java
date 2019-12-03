@@ -18,8 +18,8 @@ public class PetService {
 			.orElseThrow(() -> new PetNotFoundException(id));
 	}
 
-	public Iterable<PetEntity> getPets() {
-		return repository.findAll();
+	public Iterable<PetEntity> getPets(Long personId) {
+		return personService.getPerson(personId).getPets();
 	}
 
 	public PetEntity save(Long personId, Pet pet) {

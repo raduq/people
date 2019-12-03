@@ -10,7 +10,14 @@ import io.swagger.annotations.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -45,8 +52,9 @@ public class PetController {
 		@ApiResponse(code = 500, message = "Server failed to respond")
 	})
 	@GetMapping
-	public List<Pet> getPets() {
-		return new PetMapper().toListOfDTO(service.getPets().spliterator());
+	public List<Pet> getPets(@ApiParam(value = "Id of the person owner", required = true)
+							 @PathVariable("personId") Long personId) {
+		return new PetMapper().toListOfDTO(service.getPets(personId).spliterator());
 	}
 
 	@ApiOperation(value = "Create a new pet")

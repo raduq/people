@@ -16,8 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -46,10 +46,10 @@ public class PersonEntity {
 	@Column(name = "birth_date")
 	private Date birthDate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private AddressEntity address;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<PetEntity> pets;
 
 	public Person toDTO() {

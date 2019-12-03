@@ -1,16 +1,18 @@
-
 server:
   servlet:
     context-path: '/api'
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+    url: jdbc:mysql://localhost:3308/people
+    driverClassName: com.mysql.jdbc.Driver
+    username: root
+    password: pass
   flyway:
-    url: jdbc:h2:mem:testdb
-    user: sa
-    password: password
+    url: jdbc:mysql://localhost:3308/people
+    user: root
+    password: pass
     locations: classpath:db/migration
-    schemas: people
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect

@@ -10,7 +10,15 @@ import io.swagger.annotations.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -35,7 +43,7 @@ public class PersonController {
 	})
 	@GetMapping(value = "/{id}")
 	public Person getPerson(
-		@ApiParam(value = "id", required = true)
+		@ApiParam(value = "id", required = true, example = "1")
 		@PathVariable Long id) {
 		return service.getPerson(id).toDTO();
 	}
@@ -47,9 +55,9 @@ public class PersonController {
 	})
 	@GetMapping
 	public List<Person> getAll(
-		@ApiParam(value = "First name of the person")
+		@ApiParam(value = "First name of the person", example = "John")
 		@RequestParam(value = "first-name", required = false) String firstName,
-		@ApiParam(value = "Last name of the person")
+		@ApiParam(value = "Last name of the person", example = "Wayne")
 		@RequestParam(value = "last-name", required = false) String lastName) {
 		return new PersonMapper()
 			.toListOfDTO(service.getPeople(firstName, lastName).spliterator());
@@ -75,7 +83,7 @@ public class PersonController {
 	})
 	@PutMapping("/{id}")
 	public Person update(
-		@ApiParam(value = "Id of the person", required = true)
+		@ApiParam(value = "Id of the person", required = true, example = "1")
 		@PathVariable Long id,
 		@ApiParam(value = "Person data to be updated", required = true)
 		@RequestBody Person person) {

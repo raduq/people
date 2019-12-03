@@ -3,10 +3,14 @@
 ## Dependencies
 
 - Java 13
+- Docker
+- Maven
 
 ## Getting started
 
-//TODO
+- go to project root
+- start database with `./docker/docker-compose up -d`
+- start application with `mvn ./people-server/spring-boot:run`
 
 ## Usage
 
