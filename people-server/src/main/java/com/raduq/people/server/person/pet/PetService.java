@@ -5,10 +5,6 @@ import com.raduq.people.server.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 @Service
 public class PetService {
 
@@ -29,13 +25,14 @@ public class PetService {
 	public PetEntity save(Long personId, Pet pet) {
 		PersonEntity person = personService.getPerson(personId);
 		person.addPet(pet.toEntity());
+		personService.update(person.getId(), person.toDTO());
 		return repository.save(pet.toEntity());
 	}
 
 	public PetEntity update(Long personId, Long id, Pet pet) {
-		PetEntity petFound = getPet(id);
+		PetEntity oldPet = getPet(id);
 		PersonEntity person = personService.getPerson(personId);
-		person.putPet(person.getPets().indexOf(petFound), pet.toEntity());
+		person.putPet(oldPet, pet.toEntity());
 		return repository.save(pet.toEntity());
 	}
 

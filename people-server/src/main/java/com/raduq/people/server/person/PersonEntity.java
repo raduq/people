@@ -9,7 +9,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
 
@@ -40,13 +48,14 @@ public class PersonEntity {
 		return new PersonMapper().toDTO(this);
 	}
 
-	public PersonEntity addPet(PetEntity pet){
+	public PersonEntity addPet(PetEntity pet) {
 		this.pets.add(pet);
 		return this;
 	}
 
-	public PersonEntity putPet(int index, PetEntity pet){
-		this.pets.set(index, pet);
+	public PersonEntity putPet(PetEntity oldPet, PetEntity pet) {
+		this.pets.remove(oldPet);
+		this.pets.add(pet);
 		return this;
 	}
 
