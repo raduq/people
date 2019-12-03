@@ -41,9 +41,11 @@ public class PetController {
 		@ApiResponse(code = 500, message = "Server failed to respond")
 	})
 	@GetMapping("/{id}")
-	public Pet getPet(@ApiParam(value = "id", required = true)
+	public Pet getPet(@ApiParam(value = "Id of the person owner", required = true)
+					  @PathVariable("personId") Long personId,
+					  @ApiParam(value = "id", required = true)
 					  @PathVariable(value = "id") Long id) {
-		return service.getPet(id).toDTO();
+		return service.getPet(personId, id).toDTO();
 	}
 
 	@ApiOperation(value = "Get all pets")

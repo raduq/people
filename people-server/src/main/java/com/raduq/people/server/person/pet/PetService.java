@@ -18,6 +18,11 @@ public class PetService {
 			.orElseThrow(() -> new PetNotFoundException(id));
 	}
 
+	public PetEntity getPet(Long personId, Long id) {
+		personService.getPerson(personId);
+		return getPet(id);
+	}
+
 	public Iterable<PetEntity> getPets(Long personId) {
 		return personService.getPerson(personId).getPets();
 	}
