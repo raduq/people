@@ -1,5 +1,9 @@
 # People API
 
+## Dependencies
+
+- Java 13
+
 ## Getting started
 
 //TODO
