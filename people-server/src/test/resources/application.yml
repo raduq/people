@@ -1,0 +1,15 @@
+server:
+  servlet:
+    context-path: '/api'
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:people
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  flyway:
+    url: jdbc:h2:mem:people
+    user: sa
+    password:
+    locations: classpath:db/migration

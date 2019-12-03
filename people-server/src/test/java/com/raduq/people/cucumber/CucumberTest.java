@@ -5,13 +5,15 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 @RunWith(Cucumber.class)
 @CucumberOptions(
 	plugin = {"pretty", "html:target/cucumber"},
 	monochrome = true,
 	features = "src/test/resources/features",
 	glue = {"com.raduq.people.cucumber.stepdefs"})
-@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CucumberTest {
 }

@@ -70,7 +70,7 @@ public class PersonStepdefs extends CucumberTest {
 			ResponseEntity<Person> response = restTemplate.exchange(getUrl() + "/" + id, HttpMethod.GET, null, Person.class);
 			assertEquals(response.getStatusCodeValue(), status);
 		} catch (HttpStatusCodeException e) {
-			assertEquals(e.getRawStatusCode(), status);
+			assertEquals(status, e.getRawStatusCode());
 		}
 	}
 

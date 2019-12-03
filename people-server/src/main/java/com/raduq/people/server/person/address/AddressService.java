@@ -28,8 +28,4 @@ public class AddressService {
 		return repository.save(addressToBeUpdated);
 	}
 
-	public void delete(Long id) {
-		AddressEntity addressEntity = getAddress(id);
-		repository.delete(addressEntity);
-	}
 }

@@ -3,8 +3,10 @@
 ## Dependencies
 
 - Java 13
-- Docker
+- Docker (for mysql)
 - Maven
+
+- (for branch) kotlin
 
 ## Getting started
 
@@ -15,3 +17,5 @@
 ## Usage
 
 Documentation: http://localhost:8080/api/swagger-ui.html
+
+

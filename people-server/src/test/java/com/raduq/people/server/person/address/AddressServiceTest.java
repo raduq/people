@@ -8,12 +8,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -59,26 +58,5 @@ public class AddressServiceTest {
 		when(repository.findById(1L)).thenReturn(Optional.empty());
 
 		assertThrows(AddressNotFoundException.class, () -> service.update(1L, 1L, address));
-	}
-
-	@Test
-	@DisplayName("Should delete address")
-	public void shouldDeleteAddress() {
-		AddressEntity entity = testInstances.addressEntity();
-		when(repository.findById(1L))
-			.thenReturn(Optional.of(testInstances.addressEntity()));
-		doNothing().when(repository).delete(entity);
-
-		service.delete(1L);
-
-		verify(repository).delete(entity);
-	}
-
-	@Test
-	@DisplayName("Should not delete address when not exists")
-	public void shouldNotDeleteWhenAddressNotFound() {
-		when(repository.findById(1L)).thenReturn(Optional.empty());
-
-		assertThrows(AddressNotFoundException.class, () -> service.delete(1L));
 	}
 }

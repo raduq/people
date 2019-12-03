@@ -57,7 +57,7 @@ public class PetStepdefs {
 			ResponseEntity<Pet> response = restTemplate.exchange(getUrl() + "/" + id, HttpMethod.GET, null, Pet.class);
 			assertEquals(response.getStatusCodeValue(), status);
 		} catch (HttpStatusCodeException e) {
-			assertEquals(e.getRawStatusCode(), status);
+			assertEquals(status, e.getRawStatusCode());
 		}
 	}
 

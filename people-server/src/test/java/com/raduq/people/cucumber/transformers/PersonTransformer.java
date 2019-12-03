@@ -1,5 +1,6 @@
 package com.raduq.people.cucumber.transformers;
 
+import com.raduq.people.server.TestInstances;
 import com.raduq.people.server.person.Person;
 import com.raduq.people.server.person.pet.Pet;
 import io.cucumber.datatable.DataTable;
@@ -27,6 +28,7 @@ public class PersonTransformer implements TableTransformer<Person> {
 				ifContains(key, "lastName", value, person::setLastName);
 				ifContains(key, "birthDate", value, v -> person.setBirthDate(toDate(v)));
 				ifContains(key, "pet", value, v -> person.getPets().addAll(addPets(v)));
+				ifContains(key, "address", value, v -> person.setAddress(new TestInstances().address()));
 			})
 		);
 		return person;
