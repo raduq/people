@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.raduq</groupId>
-    <artifactId>people</artifactId>
+	<groupId>com.raduq</groupId>
+	<artifactId>people</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 
@@ -28,7 +28,7 @@
 		<swagger.version>2.9.2</swagger.version>
 		<h2.version>1.4.197</h2.version>
 
-		<java.version>13</java.version>
+		<java.version>1.13</java.version>
 	</properties>
 
 	<dependencyManagement>

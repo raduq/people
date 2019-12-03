@@ -37,13 +37,13 @@ Feature: Search, create, update and delete people's pets
       | 4  | alanis | 2   |
     Then the pet PUT response should be:
     """
-    {"id":4,"name":"alanis","age":3}
+    {"id":4,"name":"alanis","age":2}
     """
 
   Scenario: Delete an existing pet
     Given the following pet should exist:
       | id | name | age |
       | 4  | loid | 8   |
-    When a DELETE request to person with id 4
+    When a DELETE request to pet with id 4
     Then the pet DELETE status should be 200
 

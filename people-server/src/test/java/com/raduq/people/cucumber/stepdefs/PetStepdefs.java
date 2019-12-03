@@ -102,7 +102,7 @@ public class PetStepdefs {
 	}
 
 	@Then("the pet DELETE status should be {int}")
-	public void delResponseIs(Integer status) throws JsonProcessingException {
+	public void delResponseIs(Integer status) {
 		assertEquals(status, delReq.getStatusCodeValue());
 	}
 

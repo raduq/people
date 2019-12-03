@@ -32,8 +32,9 @@ public class PetService {
 	public PetEntity update(Long personId, Long id, Pet pet) {
 		PetEntity oldPet = getPet(id);
 		PersonEntity person = personService.getPerson(personId);
-		person.putPet(oldPet, pet.toEntity());
-		return repository.save(pet.toEntity());
+		person = person.putPet(oldPet, pet.toEntity());
+		personService.update(person.getId(), person.toDTO());
+		return pet.toEntity();
 	}
 
 	public void delete(Long personId, Long id) {

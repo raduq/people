@@ -115,7 +115,7 @@ public class PersonStepdefs extends CucumberTest {
 	}
 
 	@Then("the person DELETE status should be {int}")
-	public void delResponseIs(Integer status) throws JsonProcessingException {
+	public void delResponseIs(Integer status) {
 		assertEquals(status, delReq.getStatusCodeValue());
 	}
 

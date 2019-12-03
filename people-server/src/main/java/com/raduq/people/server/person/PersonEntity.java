@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -33,15 +34,22 @@ public class PersonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotBlank(message = "The person first name should not be null")
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
+
+	@NotBlank(message = "The person last name should not be null")
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
+
 	@Column(name = "birth_date")
 	private Date birthDate;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private AddressEntity address;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
 	private List<PetEntity> pets;
 
 	public Person toDTO() {
