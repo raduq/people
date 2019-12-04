@@ -5,8 +5,7 @@
 - Java 13
 - Docker (for mysql)
 - Maven
-
-- (for branch) kotlin
+- Lombok
 
 ## Getting started
 
