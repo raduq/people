@@ -25,7 +25,7 @@
 		<mockito-extension.version>2.23.0</mockito-extension.version>
 		<cucumber.version>4.2.0</cucumber.version>
 
-		<swagger.version>2.9.2</swagger.version>
+		<swagger.version>2.10.0</swagger.version>
 		<h2.version>1.4.197</h2.version>
 
 		<java.version>13</java.version>
